@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from decouple import config
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-@l96i#ak=kcasrsa9x5_3g6@fu0^h0346&@@o@dmb)@mjj10dj"
+
+from django.core.management.utils import get_random_secret_key
+
+SECRET_KEY = config("SECRET_KEY", default=get_random_secret_key(), cast=str)
+PAYSTACK_SECRET_KEY = config("PAYSTACK_SECRET_KEY", default=get_random_secret_key(), cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = config("DEBUG", default=False, cast=bool)
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

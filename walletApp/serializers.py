@@ -68,7 +68,8 @@ class DepositSerializer(serializers.Serializer):
         data = self.validated_data
         url = 'https://api.paystack.co/transaction/initialize'
         headers = {
-            {"authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}"}}
+            "authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}"
+        }
         r = requests.post(url, headers=headers, data=data)
         response = r.json()
         WalletTransaction.objects.create(
